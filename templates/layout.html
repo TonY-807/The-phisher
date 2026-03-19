@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PhishGuard - SOC Dashboard</title>
+    <title>ThePhisher - SOC Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -11,7 +11,7 @@
     <div class="sidebar">
         <div class="sidebar-logo">
             <i data-lucide="shield-check"></i>
-            <span>Phish<span>Guard</span></span>
+            <span>The<span>Phisher</span></span>
         </div>
         <nav class="sidebar-nav">
             <a href="{{ url_for('dashboard') }}" class="nav-item {{ 'active' if request.endpoint == 'dashboard' }}">

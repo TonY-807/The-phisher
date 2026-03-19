@@ -6,7 +6,7 @@ import pdf_generator
 import sys
 
 def interactive_mode():
-    print("Welcome to the Multi-Layer Phishing Detection System")
+    print("Welcome to ThePhisher: Multi-Layer Detection System")
     print("1. Scan URL")
     print("2. Scan Email (.eml file)")
     print("3. View Logs")
