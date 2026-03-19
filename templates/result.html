@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="result-header">
+        <h2 style="margin-top: 0; color: var(--text-muted);">Scan Result for</h2>
+        <div style="font-size: 1.25rem; word-break: break-all; margin-bottom: 1.5rem; color: var(--text-main);">
+            {{ result.url }}
+        </div>
+        
+        <div class="result-score score-{{ result.classification }}">
+            {{ result.score }}<span style="font-size: 2rem; color: var(--text-muted);">/100</span>
+        </div>
+        
+        <span class="badge badge-{{ result.classification }}" style="font-size: 1.25rem; padding: 0.5rem 1.5rem;">
+            {{ result.classification }} Risk
+        </span>
+    </div>
+
+    <h3 style="margin-top: 2rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #334155;">Indicators</h3>
+    
+    <div class="details-list">
+        {% for detail in result.details %}
+        <div class="detail-item">
+            <div class="detail-label">{{ detail.check }}</div>
+            <div class="detail-value">
+                <span>{{ detail.result }}</span>
+                {% if detail.safe %}
+                    <span class="icon" style="color: var(--success-color);">✓</span>
+                {% else %}
+                    <span class="icon" style="color: var(--danger-color);">✗</span>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div style="margin-top: 2rem; text-align: center; display: flex; justify-content: center; gap: 1rem;">
+        <a href="{{ url_for('index') }}" class="btn" style="background: var(--panel-bg); color: var(--text-main); border: 1px solid #475569;">Scan Another URL</a>
+        <form action="{{ url_for('download_report') }}" method="POST" style="margin: 0;">
+            <input type="hidden" name="url" value="{{ result.url }}">
+            <button type="submit" class="btn">Download PDF Report</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

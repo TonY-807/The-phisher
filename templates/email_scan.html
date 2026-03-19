@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Email Analysis</h1>
+    <p class="page-description">Analyze email content for spoofing, malicious headers, and social engineering attempts.</p>
+</div>
+
+<div class="card">
+    <div class="card-title">
+        <i data-lucide="mail"></i>
+        Scan Email Content
+    </div>
+    <form action="{{ url_for('email_analysis') }}" method="POST">
+        <div class="form-group">
+            <label class="form-label">Raw Email Text or Headers</label>
+            <textarea name="email_content" class="form-control" placeholder="Paste the full email raw source here..." required></textarea>
+        </div>
+        <button type="submit" class="btn-primary">
+            <i data-lucide="shield-check"></i>
+            Run Forensic Scan
+        </button>
+    </form>
+</div>
+
+{% if result %}
+<div class="card">
+    <div class="card-title">
+        <i data-lucide="file-text"></i>
+        Forensic Report
+    </div>
+    
+    <div class="result-box {{ result.classification.lower() }}">
+        <div class="result-header">
+            <div>
+                <div class="verdict-title {{ 'text-danger' if result.classification == 'Phishing' else 'text-warning' if result.classification == 'Suspicious' else 'text-success' }}">
+                    {{ result.classification.upper() }} DETECTED
+                </div>
+                <div style="color: var(--text-secondary); margin-top: 0.25rem; font-family: 'JetBrains Mono', monospace; font-size: 0.875rem;">
+                    Source: {{ result.input_data }}
+                </div>
+            </div>
+            <div class="score-display">
+                <div class="score-number {{ 'text-danger' if result.classification == 'Phishing' else 'text-warning' if result.classification == 'Suspicious' else 'text-success' }}">
+                    {{ result.score }}%
+                </div>
+                <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600;">THREAT ANALYTICS</div>
+            </div>
+        </div>
+
+        <div class="details-list">
+            {% for detail in result.details %}
+            <div class="detail-row">
+                <span class="detail-label">{{ detail.check }}</span>
+                <span class="detail-value {{ 'text-success' if detail.safe else 'text-danger' }}">
+                    {{ detail.result }}
+                    {% if detail.safe %}
+                        <i data-lucide="check-circle" size="14" style="display: inline-block; vertical-align: middle; margin-left: 0.25rem;"></i>
+                    {% else %}
+                        <i data-lucide="alert-triangle" size="14" style="display: inline-block; vertical-align: middle; margin-left: 0.25rem;"></i>
+                    {% endif %}
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+            <form action="{{ url_for('download_report') }}" method="POST" style="margin: 0;">
+                <input type="hidden" name="input_data" value="{{ request.form.get('email_content') }}">
+                <input type="hidden" name="input_type" value="Email">
+                <button type="submit" class="btn-primary">
+                    <i data-lucide="download"></i>
+                    Export Forensic PDF
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

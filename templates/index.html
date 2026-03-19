@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card">
+    <h2 style="margin-top: 0;">Analyze a URL</h2>
+    <p class="text-muted">Enter a website URL to scan it for phishing indicators.</p>
+    
+    <form action="{{ url_for('index') }}" method="POST">
+        <div class="form-group">
+            <input type="text" name="url" class="form-control" placeholder="https://example.com/login" required>
+        </div>
+        <button type="submit" class="btn btn-block">Scan URL</button>
+    </form>
+</div>
+
+{% if history %}
+<div class="card">
+    <h2 style="margin-top: 0;">Recent Scans</h2>
+    <div style="overflow-x: auto;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Input</th>
+                    <th>Classification</th>
+                    <th>Score</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in history %}
+                <tr>
+                    <td>{{ item.input_type }}</td>
+                    <td style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ item.input_data }}</td>
+                    <td>
+                        <span class="badge badge-{{ item.classification }}">
+                            {{ item.classification }}
+                        </span>
+                    </td>
+                    <td>{{ item.score }} / 100</td>
+                    <td class="text-muted">{{ item.scan_date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard - SOC Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <i data-lucide="shield-check"></i>
+            <span>Phish<span>Guard</span></span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="{{ url_for('dashboard') }}" class="nav-item {{ 'active' if request.endpoint == 'dashboard' }}">
+                <i data-lucide="layout-dashboard"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="{{ url_for('url_analysis') }}" class="nav-item {{ 'active' if request.endpoint == 'url_analysis' }}">
+                <i data-lucide="globe"></i>
+                <span>Website Analysis</span>
+            </a>
+            <a href="{{ url_for('email_analysis') }}" class="nav-item {{ 'active' if request.endpoint == 'email_analysis' }}">
+                <i data-lucide="mail"></i>
+                <span>Email Analysis</span>
+            </a>
+            <a href="{{ url_for('logs') }}" class="nav-item {{ 'active' if request.endpoint == 'logs' }}">
+                <i data-lucide="list"></i>
+                <span>Scan Logs</span>
+            </a>
+        </nav>
+    </div>
+
+    <main class="main-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; border: 1px solid rgba(239, 68, 68, 0.2);">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

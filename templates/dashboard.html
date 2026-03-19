@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Security Dashboard</h1>
+    <p class="page-description">Overview of phishing detection metrics and recent activity.</p>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <span class="stat-label">Total Scans</span>
+        <span class="stat-value stat-total">{{ stats.total }}</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">Phishing Detected</span>
+        <span class="stat-value stat-phishing">{{ stats.phishing }}</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">Suspicious Entities</span>
+        <span class="stat-value stat-suspicious">{{ stats.suspicious }}</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">Safe Entities</span>
+        <span class="stat-value stat-safe">{{ stats.safe }}</span>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-title">
+        <i data-lucide="clock"></i>
+        Recent Scans
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Input Source</th>
+                    <th>Result</th>
+                    <th>Score</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in history %}
+                <tr>
+                    <td>{{ item.input_type }}</td>
+                    <td style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ item.input_data }}</td>
+                    <td>
+                        <span class="badge badge-{{ item.classification.lower() }}">
+                            {{ item.classification }}
+                        </span>
+                    </td>
+                    <td>{{ item.score }}%</td>
+                    <td style="color: var(--text-secondary)">{{ item.scan_date }}</td>
+                </tr>
+                {% endfor %}
+                {% if not history %}
+                <tr>
+                    <td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 2rem;">No scans found yet. Start analyzing to see results.</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

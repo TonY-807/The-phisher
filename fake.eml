@@ -1,0 +1,12 @@
+From: security@paypal-verification-now.com
+Reply-To: hacker@attacker.com
+To: victim@example.com
+Subject: URGENT: Your Account Has Been Suspended
+
+Action required!
+Your account has been suspended due to suspicious activity.
+Please login immediately to verify your identity and restore access:
+
+http://192.168.1.1/login_verify.html
+
+Do not ignore this, or your account will be permanently closed.

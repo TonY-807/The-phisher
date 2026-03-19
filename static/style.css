@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg-dark: #05080e;
+  --bg-sidebar: rgba(15, 23, 42, 0.8);
+  --bg-card: rgba(30, 41, 59, 0.4);
+  --bg-input: rgba(51, 65, 85, 0.4);
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --accent-blue: #3b82f6;
+  --accent-purple: #8b5cf6;
+  --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  --danger: #ff4b5c;
+  --warning: #fbbf24;
+  --success: #00f5d4;
+  --border: rgba(255, 255, 255, 0.1);
+  --sidebar-width: 260px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: var(--bg-dark);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.1) 0px, transparent 50%);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Sidebar - Glassmorphism */
+.sidebar {
+  width: var(--sidebar-width);
+  background: var(--bg-sidebar);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+  z-index: 100;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-logo {
+  padding: 2.5rem 1.5rem;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.sidebar-logo span {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sidebar-nav {
+  flex-grow: 1;
+  padding: 0.75rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 1.125rem;
+  padding: 1rem 1.25rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: 0.75rem;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
+  border: 1px solid transparent;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  transform: translateX(5px);
+}
+
+.nav-item.active {
+  background: var(--accent-gradient);
+  color: white;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.nav-item i {
+  width: 20px;
+  height: 20px;
+}
+
+/* Main Content */
+.main-content {
+  margin-left: var(--sidebar-width);
+  flex-grow: 1;
+  padding: 3rem 4rem;
+  width: calc(100% - var(--sidebar-width));
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(to right, #fff, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.page-description {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-bottom: 2.5rem;
+}
+
+/* Dashboard Stats - Visual Flourish */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 40px; height: 40px;
+  background: var(--accent-gradient);
+  opacity: 0.1;
+  filter: blur(20px);
+}
+
+.stat-label {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.75rem;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+.stat-total { color: white; }
+.stat-phishing { color: var(--danger); }
+.stat-suspicious { color: var(--warning); }
+.stat-safe { color: var(--success); }
+
+/* Cards & Forms - Glassmorphism */
+.card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: white;
+}
+
+.form-control {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.form-control:focus {
+  border-color: var(--accent-blue);
+  background: rgba(51, 65, 85, 0.7);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}
+
+.btn-primary {
+  background: var(--accent-gradient);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+}
+
+/* Tables Styling */
+table {
+  border-spacing: 0 0.5rem;
+  border-collapse: separate;
+}
+
+th {
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: none;
+}
+
+td {
+  padding: 1.25rem 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+tr td:first-child { border-left: 1px solid var(--border); border-radius: 0.75rem 0 0 0.75rem; }
+tr td:last-child { border-right: 1px solid var(--border); border-radius: 0 0.75rem 0.75rem 0; }
+
+/* Result Verdict Styles */
+.verdict-title {
+  text-shadow: 0 0 20px currentColor;
+}
+
+/* Responsive fixes */
+@media (max-width: 1024px) {
+  .main-content { padding: 2rem; }
+}
+@media (max-width: 640px) {
+  .sidebar { transform: translateX(-100%); }
+  .main-content { margin-left: 0; width: 100%; }
+}

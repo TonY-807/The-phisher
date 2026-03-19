@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+
+# Data
+phishing.db
+reports/
+*.pdf
+
+# Environment
+.env
+.flaskenv
+
+# IDE
+.vscode/
+.idea/

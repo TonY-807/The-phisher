@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Global Scan Logs</h1>
+    <p class="page-description">Complete history of all URL and Email forensic scans.</p>
+</div>
+
+<div class="card">
+    <div class="card-title">
+        <i data-lucide="archive"></i>
+        Analysis Archive
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Audit Type</th>
+                    <th>Detection Input</th>
+                    <th>Verdict</th>
+                    <th>Risk Score</th>
+                    <th>Audit Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in history %}
+                <tr>
+                    <td style="color: var(--text-secondary); font-family: 'JetBrains Mono', monospace;">#{{ item.id }}</td>
+                    <td>{{ item.input_type }}</td>
+                    <td style="max-width: 400px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ item.input_data }}</td>
+                    <td>
+                        <span class="badge badge-{{ item.classification.lower() }}">
+                            {{ item.classification }}
+                        </span>
+                    </td>
+                    <td class="font-bold">{{ item.score }}%</td>
+                    <td style="color: var(--text-secondary)">{{ item.scan_date }}</td>
+                </tr>
+                {% endfor %}
+                {% if not history %}
+                <tr>
+                    <td colspan="6" style="text-align: center; color: var(--text-secondary); padding: 2rem;">No logs available.</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
